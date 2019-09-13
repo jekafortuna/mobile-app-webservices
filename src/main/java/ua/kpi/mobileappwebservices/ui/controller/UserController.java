@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import ua.kpi.mobileappwebservices.ui.model.request.UserDetailsRequestModel;
 import ua.kpi.mobileappwebservices.ui.model.response.UserRest;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -30,7 +32,7 @@ public class UserController {
         returnValue.setFirstName("Joe");
         returnValue.setLastName("Dante");
 
-        return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
     @PostMapping(consumes = {
@@ -41,14 +43,14 @@ public class UserController {
                             MediaType.APPLICATION_XML_VALUE,
                             MediaType.APPLICATION_JSON_VALUE
                             })
-    public ResponseEntity<UserRest> createUser(@RequestBody UserDetailsRequestModel userDetails){
+    public ResponseEntity<UserRest> createUser(@Valid @RequestBody UserDetailsRequestModel userDetails){
         UserRest returnValue = new UserRest();
 
         returnValue.setEmail(userDetails.getEmail());
         returnValue.setFirstName(userDetails.getFirstName());
         returnValue.setLastName(userDetails.getLastName());
 
-        return new ResponseEntity<UserRest>(returnValue, HttpStatus.OK);
+        return new ResponseEntity<>(returnValue, HttpStatus.OK);
     }
 
     @PutMapping
